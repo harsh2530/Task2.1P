@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Harsh Nagra Subscription</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Subscribe to Harsh Nagra Newsletter</h1>
+        <form id="subForm">
+            <input type="email" id="email" placeholder="your email here" required>
+            <button>Subscribe</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('#subForm');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            let email = document.querySelector('#email').value;
+
+            try {
+                let r = await fetch('/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                let res = await r.json();
+                alert(res.message || res.error || 'something went wrong');
+            } catch (err) {
+                console.error(err);
+                alert('could not subscribe, try again later');
+            }
+        });
+    </script>
+</body>
+</html>
